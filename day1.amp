@@ -1,0 +1,19 @@
+
+%%[
+    VAR @firstName
+    SET @firstName = AttributeValue("FirstName")
+    SET @firstName = ProperCase(@firstName)
+]%%
+
+<p>Hello %%=v(@firstName)=%%,</p>
+
+<p>
+    We are excited to announce our new holiday package that is perfect for a
+    getaway.With stunning beaches and breathtaking views, this package will make
+    your vacation unforgettable.
+</p>
+
+<p>Thank you for choosing us as your travel partner.</p>
+
+<p>Best regards,</p>
+<p>The Travel Company</p>
