@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        %%[
+            VAR @fullName, @renewalDate, @renewalFormattedDate
+            SET @fullName = Concat(AttributeValue("FirstName"), " ", AttributeValue("LastName"))
+            SET @renewalDate = AttributeValue("RenewalDate")
+            SET @renewalFormattedDate = Format(@renewalDate, "MMMM dd, yyyy")
+        ]%%
+        <p>Hello %%=v(@fullName)=%%,</p>
+
+        <p>
+            We hope you are enjoying your membership at our health club. We
+            wanted to remind you that your membership will expire on %%=v(@renewalFormattedDate)=%%.
+        </p>
+
+        <p>
+            Do not let your membership expire! Renew today and continue to take
+            advantage of all the benefits our health club has to offer.
+        </p>
+
+        <p>Thank you for being a part of our community.</p>
+
+        <p>Best regards,</p>
+        <p>The Health Club</p>
+    </body>
+</html>
