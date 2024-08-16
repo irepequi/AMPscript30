@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 5</title>
+  </head>
+  <body>
+    %%[
+      VAR @birthday, @today, @daysUntilBirthday, @discount
+
+      SET @birthday = AttributeValue("Birthday")
+      SET @today = SystemDateToLocalDate(Now())
+      SET @daysUntilBirthday = DateDiff(@birthday, @today, "D")
+
+      IF @daysUntilBirthday < 0 THEN
+        SET @daysUntilBirthday = DateDiff(DateAdd(@birthday, 1, "Y"), @today, "D")
+      ENDIF
+
+      IF @daysUntilBirthday <= 7 THEN
+        SET @discount = "15%"
+      ELSEIF @daysUntilBirthday <= 14 THEN
+        SET @discount = "10%"
+      ELSE
+        SET @discount = "5%"
+      ENDIF
+    ]%%
+    
+    <p>Hello,</p>
+    <p>To celebrate your birthday, we are offering you a special discount!</p>
+
+    <p>You will receive a %%=v(@discount)=%% discount on your next purchase.</p>
+
+    <p>Happy birthday! 🎉</p>
+
+    <p>Best regards,</p>
+    <p>Props Flora</p>
+  </body>
+</html>

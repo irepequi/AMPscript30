@@ -3,14 +3,16 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Day 1</title>
     </head>
     <body>
         %%[
             VAR @firstName
+            
             SET @firstName = AttributeValue("FirstName")
             SET @firstName = ProperCase(@firstName)
         ]%%
+        
         <p>Hello %%=v(@firstName)=%%,</p>
 
         <p>

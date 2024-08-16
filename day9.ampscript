@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 9</title>
+  </head>
+  <body>
+    %%[
+      VAR @discountAmount, @fullName
+
+      SET @discountAmount = Random(10, 50)
+      SET @fullName = Concat(AttributeValue("FirstName"), " ", AttributeValue("LastName"))
+
+      InsertDE("DiscountWinners", "SubscriberKey", AttributeValue("SubscriberKey"), "Discount", @discountAmount)
+    ]%%
+    
+    <p>Hello %%=v(@fullName)=%%,</p>
+
+    <p>Are you ready for some shopping? Today, we are offering our subscribers a special discount on their next purchase.</p>
+
+    <p>Your discount is: %%=FormatNumber(@discountAmount, 0)=%%%</p>
+
+    <p>Do not miss this opportunity and use it now.</p>
+
+    <p>Best regards,</p>
+    <p>The Fashion Store</p>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 6</title>
+  </head>
+  <body>
+    %%[
+      VAR @weight, @height, @heightSquared, @bmi
+      
+      SET @weight = AttributeValue("weight")
+      SET @height = AttributeValue("height")
+      
+      SET @heightSquared = Multiply(@height, @height)
+      SET @bmi = Divide(@weight, @heightSquared)
+    ]%%
+
+    <p>Hello,</p>
+
+    <p>Based on your weight and height, your Body Mass Index (BMI) is %%=v(FormatNumber(@bmi, "N"))=%%.</p>
+
+    <p>Thank you for choosing our fitness company to help you reach your fitness goals!</p>
+
+    <p>Sincerely,</p>
+    <p>The Fitness Company Team</p>
+  </body>
+</html>

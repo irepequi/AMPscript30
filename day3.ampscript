@@ -3,14 +3,28 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Day 3</title>
     </head>
     <body>
         %%[
-            
+            VAR @city
+            SET @city = AttributeValue("city")
+            SET @warehouseCity = "Halifax"
+            IF @city == @warehouseCity THEN
+                SET @shippingOffer = "Free shipping on all local orders in Halifax!"
+            ELSE
+                SET @shippingOffer = "Use code SAVE10 to receive 10% off your entire order!"
+            ENDIF
         ]%%
-        Dear valued customer, We are excited to offer you a special deal
-        on our products. Today only, you can receive the following offer: Free
-        shipping on all local orders in Halifax! Best regards, The Company
+
+        <p>Dear valued customer,</p>
+
+        <p>
+            We are excited to offer you a special deal on our products. Today
+            only, you can receive the following offer: <b>%%=v(@shippingOffer)=%%</b>
+        </p>
+
+        <p>Best regards,</p>
+        <p>The Company</p>
     </body>
 </html>

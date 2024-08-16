@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Day 4</title>
+    </head>
+    <body>
+        %%[
+            VAR @referralEmail, @isValidEmail, @message
+
+            SET @referralEmail = AttributeValue("referralemail")
+            SET @isValidEmail = IsEmailAddress(@referralEmail)
+            SET @message = IIf(@isValidEmail, "We confirm that we have received your referral email address.", "Please provide us with a valid referral email address.")
+        ]%%
+        
+        <p>Hello,</p>
+
+        <p>Thank you for referring a friend to our perks program!</p>
+
+        <p>%%=v(@message)=%%</p>
+
+        <p>Best regards,</p>
+        <p>Wanderer Outdoor Equipment</p>
+    </body>
+</html>
