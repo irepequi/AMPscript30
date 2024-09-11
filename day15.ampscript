@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 15</title>
+  </head>
+  <body>
+    %%[
+      VAR @email, @fullName, @mileage, @services, @servicesCount, @counter
+
+      SET @email = AttributeValue("Email")
+      SET @fullName = Concat(AttributeValue("FirstName"), " ", AttributeValue("LastName"))
+      SET @mileage = AttributeValue("Mileage")
+      SET @services = LookupRows('Services', 'Mileage', @mileage) 
+      SET @servicesCount = RowCount(@services)
+    ]%%
+
+    <p>Hi %%=v(@fullName)=%%,</p>
+
+    <p>
+      As we enjoy the remaining days of summer, it's time to think about getting your vehicle ready for fall adventures and winter road trips. Now is a great time to check major components like tires, brakes and batteries to help give you confidence on the roads as the days get shorter and the weather begins to change.
+    </p>
+
+    <p>Here are recommended services:</p>
+    %%[
+      IF @servicesCount > 0 THEN
+      FOR @counter = 1 to @servicesCount DO
+        VAR @service, @serviceName, @serviceDescription
+
+        SET @service = row(@services, @counter)
+        SET @serviceName = field(@service,'Name')
+        SET @serviceDescription = field(@service,'Description')
+    ]%%
+
+    <p>%%=v(@serviceName)=%% %%=v(@serviceDescription)=%%</p>
+
+    %%[ 
+      NEXT @counter 
+      ELSE RaiseError('No rows found', true)
+      ENDIF 
+    ]%%
+
+    <p>Visit your nearby Next Auto dealer for all your vehicle needs.</p>
+
+    <p>Best regards,</p>
+    <p>Next Auto</p>
+  </body>
+</html>

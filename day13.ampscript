@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 13</title>
+  </head>
+  <body>
+    %%[
+      VAR @email, @defaultPromo, @promoCode
+
+      SET @email = AttributeValue("Email")
+      SET @defaultPromo = "WELCOME15"
+
+      SET @promoCode = ClaimRowValue("Promo_Codes", "PromoCode", "IsClaimed", @defaultPromo, "Email", @email)
+    ]%%
+
+    <p>Hello,</p>
+
+    <p>Thank you for your interest to our new product line! Here is your special promo code for your next purchase: %%=v(@promoCode)=%%.</p>
+
+    <p>Best regards,</p>
+    <p>The Next Beauty</p>
+  </body>
+</html>

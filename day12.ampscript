@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 12</title>
+  </head>
+  <body>
+    %%[
+      VAR @fullName, @rentals, @remainder
+
+      SET @fullName = Concat(AttributeValue("FirstName"), AttributeValue("LastName"))
+      SET @rentals = Lookup("Rental_Transactions", "Count", "Email", AttributeValue("Email"))
+
+      IF @rentals >= 10 THEN
+          SET @message = "you have earned 100 points."
+      ELSEIF @rentals < 10 THEN
+          SET @remainder = Subtract(10, @rentals)	
+          SET @message = Concat("you are ", @remainder, " rent(s) away to earn 100 points.")
+      ENDIF
+    ]%%
+
+    <p>Hello %%=v(@fullName)=%%,</p>
+
+    <p>Congratulations on renting from our car rental services! You have rented a total of %%=v(@rentals)=%% time(s) and %%=v(@message)=%%.</p>
+
+    <p>Thank you for your continued loyalty to our business. We hope to see you soon!</p>
+
+    <p>Best regards,</p>
+    <p>The Next Auto</p>
+  </body>
+</html>
