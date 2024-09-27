@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 18</title>
+  </head>
+  <body>
+    %%[
+      VAR @fullName, @AppointmentDate, @appointmentTime, @AppointmentLocation
+
+      SET @fullName = Concat(AttributeValue("FirstName"), " ", AttributeValue("LastName"))
+      SET @appointmentDate = FormatDate(AttributeValue("AppointmentDate"), "M")
+      SET @appointmentTime = FormatDate(AttributeValue("appointmentDate"), "h:mm tt")
+      SET @AppointmentLocation = AttributeValue("AppointmentLocation")
+      SET @appointmentCode = AttributeValue("AppointmentCode")
+    ]%%
+    <p>Hi %%=v(@fullName)=%%</p>
+
+    <p>This is a friendly reminder that you have a dental appointment scheduled with us on %%=v(@appointmentDate)=%% at %%=v(@appointmentTime)=%%. Our office is located in %%=v(@appointmentLocation)=%%. We look forward to seeing you soon!</p>
+
+    <p>In preparation for your appointment, here are a few things to keep in mind:</p>
+
+    %%=ContentBlockByName(CONCAT("AppointmentCode_", @appointmentCode))=%%
+
+    <p>If you need to reschedule your appointment or have any questions, please do not hesitate to contact our office.</p>
+
+    <p>Thank you for choosing us as your dental care provider. We look forward to seeing you soon.</p>
+
+    <p>Sincerely,</p>
+    <p>Next Dental</p>
+  </body>
+</html>

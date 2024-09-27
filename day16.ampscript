@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 16</title>
+  </head>
+  <body>
+    %%[
+      VAR @email, @fullName, @orderId, @orders, @orderCount, @counter
+      SET @email = AttributeValue("Email")
+      SET @fullName = Concat(AttributeValue("FirstName"), " ", AttributeValue("LastName"))
+      SET @orderId = AttributeValue("orderId")
+      SET @orders = LookupRows('Order_Details', 'OrderId', @orderId)
+      SET @orderCount = RowCount(@orders)
+    ]%%
+
+    <p>Hi %%=v(@fullName)=%%,</p>
+    <p>Thanks for your order! Good things are coming your way.</p>
+
+    %%[
+      IF @orderCount > 0 THEN
+        FOR @counter = 1 TO @orderCount DO
+          VAR @order, @productName, @productDesc, @productQty, @productImg, @productPrice
+          SET @order = row(@orders, @counter)
+          SET @productName = field(@order, 'ProductName')
+          SET @productDesc = field(@order, 'ProductDesc')
+          SET @productQty = field(@order, 'ProductQty')
+          SET @productImg = field(@order, 'ProductImg')
+          SET @productPrice = field(@order, 'ProductPrice')
+    ]%%
+
+    <div style="display: flex; align-items: center; margin-bottom: 40px;">
+      <img src="%%=v(@productImg)=%%" alt="%%=v(@productName)=%%" style="width:100px; height:auto; margin-right: 20px;" />
+      <p><b>%%=v(@productName)=%%:</b> %%=v(@productDesc)=%%</p>
+      <p>%%=v(@productQty)=%% at $%%=v(@productPrice)=%%</p>
+    </div>
+
+    %%[
+      NEXT @counter
+      ELSE RaiseError('No rows found', true)
+      ENDIF
+    ]%%
+
+    <p>If you have any questions, reply to this email or contact us at hello@nexttelecom.com</p>
+
+    <p>Best regards,</p>
+    <p>Next Telecom</p>
+  </body>
+</html>

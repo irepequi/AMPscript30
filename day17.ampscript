@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 17</title>
+  </head>
+  <body>
+    %%[
+      VAR @subscriberKey, @fullName, @lastTransactionId, @lastTransactions, @lastTransactionCount, @counter
+
+      SET @subscriberKey = AttributeValue("SubscriberKey")
+      SET @fullName = Concat(AttributeValue("FirstName"), " ", AttributeValue("LastName"))
+      SET @lastTransactionId = AttributeValue("LastTransactionId")
+      SET @lastTransactions = LookupRows('Transaction_History', 'TransactionId', @LastTransactionId) 
+      SET @lastTransactionCount = RowCount(@LastTransactions)
+    ]%%
+
+    <p>Hi %%=v(@fullName)=%%,</p>
+
+    <p>This is the confirmation for the books you borrowed today:</p>
+
+    <ul>
+      %%[
+        IF @lastTransactionCount > 0 THEN
+        FOR @counter = 1 to @LastTransactionCount DO
+          VAR @lastTransaction, @lastBookName
+
+          SET @lastTransaction = row(@lastTransactions, @counter)
+          SET @lastBookName = field(@lastTransaction,'BookName')
+      ]%%
+
+      <li>%%=v(@lastBookName)=%%</li>
+
+      %%[ 
+        NEXT @counter
+        ENDIF 
+      ]%%
+    </ul>
+
+    <p>Here are the books you borrowed before.</p>
+
+    %%[
+      VAR @returns, @returnCount, @returnCounter
+
+      SET @returns = LookupRows('Transaction_History', 'SubscriberKey', @subscriberKey, 'Status', 'Waiting') 
+      SET @returnCount = RowCount(@returns)
+
+      IF @returnCount > 3 THEN
+        SET @returnCount = 3
+      ENDIF
+
+      IF @returnCount > 0 THEN
+      FOR @returnCounter = 1 to @returnCount DO
+        VAR @return, @bookName
+
+        SET @return = row(@returns, @returnCounter)
+        SET @bookName = field(@return,'BookName')
+    ]%%
+
+    %%=v(@bookName)=%%
+
+    %%[ 
+      NEXT @returnCounter
+      ELSE
+    ]%%
+
+    <p>Great job! You do not have any returns.</p>
+
+    %%[ ENDIF ]%%
+
+    <p>Best regards,</p>
+    <p>Next Library</p>
+  </body>
+</html>

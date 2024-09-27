@@ -22,18 +22,20 @@
       As we enjoy the remaining days of summer, it's time to think about getting your vehicle ready for fall adventures and winter road trips. Now is a great time to check major components like tires, brakes and batteries to help give you confidence on the roads as the days get shorter and the weather begins to change.
     </p>
 
-    <p>Here are recommended services:</p>
-    %%[
-      IF @servicesCount > 0 THEN
-      FOR @counter = 1 to @servicesCount DO
-        VAR @service, @serviceName, @serviceDescription
+    %%[ IF @servicesCount > 0 THEN ]%%
 
-        SET @service = row(@services, @counter)
-        SET @serviceName = field(@service,'Name')
-        SET @serviceDescription = field(@service,'Description')
+      <p>Here are recommended services based on your vehicle's mileage:</p>
+
+    %%[ 
+      FOR @counter = 1 TO @servicesCount DO 
+          VAR @service, @serviceName, @serviceDescription
+
+          SET @service = Row(@services, @counter)
+          SET @serviceName = Field(@service,'Name')
+          SET @serviceDescription = Field(@service,'Description')
     ]%%
 
-    <p>%%=v(@serviceName)=%% %%=v(@serviceDescription)=%%</p>
+      <p>%%=v(@serviceName)=%%: %%=v(@serviceDescription)=%%</p>
 
     %%[ 
       NEXT @counter 
