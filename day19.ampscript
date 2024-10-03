@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 19</title>
+  </head>
+  <body>
+    %%[
+      VAR @fullName, @loyaltyLevel, @LoyaltyPoints, @loyaltyBadge
+
+      SET @fullName = Concat(AttributeValue("FirstName"), " ", AttributeValue("LastName"))
+      SET @loyaltyLevel = AttributeValue("LoyaltyLevel")
+      SET @LoyaltyPoints = AttributeValue("LoyaltyPoints")
+
+      IF @loyaltyLevel == "Diamond" THEN
+        SET @loyaltyBadge = ContentImageByKey("d163d251-31c0-4248-8fe9-6a693b6493ec")
+
+      ELSEIF @loyaltyLevel == "Platinum" THEN
+        SET @loyaltyBadge = ContentImageByKey("5b9fe7d1-b63e-41d8-969f-255ea2e1aed1")
+
+      ELSEIF @loyaltyLevel == "Gold" THEN
+        SET @loyaltyBadge = ContentImageByKey("ea1d0493-22ce-4be2-8b49-84aa957722ed")
+
+      ELSEIF @loyaltyLevel == "Bronze" THEN
+        SET @loyaltyBadge = ContentImageByKey("9605a245-39bb-4b88-bc3a-b24efdc83519")
+
+      ENDIF
+    ]%%
+
+    %%=v(@loyaltyBadge)=%%
+
+    <p>Hello %%=v(@fullName)=%%,</p>
+
+    <p>We wanted to remind you that you have accumulated %%=v(@LoyaltyPoints)=%% travel credits on your account that can be used for your next trip. We encourage you to take advantage of this benefit and redeem your travel credits for your next adventure.</p>
+
+    <p>Thank you for choosing our travel company for your travel needs. We look forward to helping you plan your next trip. </p>
+
+    <p>Best regards,</p>
+    <p>Next Travel </p>
+  </body>
+</html>

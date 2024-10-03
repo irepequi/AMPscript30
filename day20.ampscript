@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 20</title>
+  </head>
+  <body>
+    %%[
+      VAR @firstName, @lastName, @fullName, @email, @surveyURL, @surveyLink
+      
+      SET @firstName = AttributeValue("FirstName")
+      SET @lastName = AttributeValue("LastName")
+      SET @fullName = Concat(@firstName, " ", @lastName)
+      SET @email = AttributeValue("Email")
+      SET @surveyURL = AttributeValue("SurveyURL")
+      SET @surveyLink = Concat(@surveyURL,"&entry.1345373543=",@firstName,"&entry.1970641631=",@lastName,"&entry.1109494443=",@email)
+    ]%%
+
+    <p>Hi %%=v(@fullName)=%%,</p>
+
+    <p>Thank you for choosing Next Rental. We value your business and want to improve our services to better serve you.</p>
+
+    <p>Please take a moment to complete a short survey about your recent rental. Your feedback helps us to enhance our services.</p>
+
+    <a href="%%=RedirectTo(@surveyLink)=%%">Take the survey</a>
+
+    <p>Thank you for your time and feedback. We look forward to serving you again.</p>
+
+    <p>Best regards,</p>
+    <p>Next Rental</p>
+  </body>
+</html>
